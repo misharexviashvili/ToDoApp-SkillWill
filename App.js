@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import {
   Button,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   ScrollView,
+  Pressable,
 } from "react-native";
 export default function App() {
   const [inputText, setInputText] = useState("");
@@ -39,9 +40,12 @@ export default function App() {
       <ScrollView>
         {task
           .map((item) => (
-            <View style={styles.taskContainer}>
+            <Pressable
+              style={styles.taskContainer}
+              key={item.key}
+            >
               <Text style={styles.taskText}>{item.text}</Text>
-            </View>
+            </Pressable>
           ))
           .reverse()}
       </ScrollView>
@@ -61,19 +65,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d6d5",
     color: "#000",
     width: 150,
+    height: 50,
     borderRadius: 10,
     marginRight: 15,
-    height: 50,
+    paddingLeft:5
   },
   taskContainer: {
     flexDirection: "row",
     justifyContent: "center",
     paddingVertical: 20,
+    marginHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 10,
     backgroundColor: "#a4abe0",
-    borderBottomColor: "#000",
-    borderBottomWidth: 2,
   },
   taskText: {
     color: "#000",
+  },
+  doneTask: {
+    backgroundColor: "green",
+    color: "#fff",
   },
 });
