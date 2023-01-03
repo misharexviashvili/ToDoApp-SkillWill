@@ -1,6 +1,5 @@
-import { Fragment, useRef, useState } from "react";
+import { useState } from "react";
 import {
-  Button,
   StyleSheet,
   Text,
   TextInput,
@@ -31,8 +30,8 @@ export default function App() {
       setInputText("");
     }
   };
-  const doneTaskHandler = function () {
-    alert("I have not written function to remove finished task yet");
+  const deleteButton = (id) => {
+    setTask((currentTask) => currentTask.filter((el) => id !== el.id));
   };
   return (
     <View style={styles.mainContainer}>
@@ -50,9 +49,16 @@ export default function App() {
       <ScrollView>
         {task
           .map((item) => (
-            <TouchableOpacity style={styles.taskContainer} key={item.id} activeOpacity={0.8}>
+            <TouchableOpacity
+              style={styles.taskContainer}
+              key={item.id}
+              activeOpacity={0.8}
+            >
               <Text style={styles.taskText}>{item.text}</Text>
-              <Pressable style={styles.doneBtn} onPress={doneTaskHandler}>
+              <Pressable
+                style={styles.doneBtn}
+                onPress={() => deleteButton(item.id)}
+              >
                 <Text>Done</Text>
               </Pressable>
             </TouchableOpacity>
