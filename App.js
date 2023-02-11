@@ -8,6 +8,8 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 export default function App() {
   const [inputText, setInputText] = useState("");
   const [task, setTask] = useState([]);
@@ -34,38 +36,40 @@ export default function App() {
     setTask((currentTask) => currentTask.filter((el) => id !== el.id));
   };
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={onChangeTextHandler}
-          style={styles.textInput}
-          placeholder="To Do"
-          value={inputText}
-        />
-        <Pressable style={styles.btn} onPress={onAddTaskHandler}>
-          <Text style={styles.btnText}>Add Task</Text>
-        </Pressable>
-      </View>
-      <ScrollView>
-        {task
-          .map((item) => (
-            <TouchableOpacity
-              style={styles.taskContainer}
-              key={item.id}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.taskText}>{item.text}</Text>
-              <Pressable
-                style={styles.doneBtn}
-                onPress={() => deleteButton(item.id)}
+   <Provider store={store}>
+      <View style={styles.mainContainer}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            onChangeText={onChangeTextHandler}
+            style={styles.textInput}
+            placeholder="To Do"
+            value={inputText}
+          />
+          <Pressable style={styles.btn} onPress={onAddTaskHandler}>
+            <Text style={styles.btnText}>Add Task</Text>
+          </Pressable>
+        </View>
+        <ScrollView>
+          {task
+            .map((item) => (
+              <TouchableOpacity
+                style={styles.taskContainer}
+                key={item.id}
+                activeOpacity={0.8}
               >
-                <Text>Done</Text>
-              </Pressable>
-            </TouchableOpacity>
-          ))
-          .reverse()}
-      </ScrollView>
-    </View>
+                <Text style={styles.taskText}>{item.text}</Text>
+                <Pressable
+                  style={styles.doneBtn}
+                  onPress={() => deleteButton(item.id)}
+                >
+                  <Text>Done</Text>
+                </Pressable>
+              </TouchableOpacity>
+            ))
+            .reverse()}
+        </ScrollView>
+      </View>
+   </Provider>
   );
 }
 
