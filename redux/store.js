@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import taskReducer from "./taskSlice";
-const initialState = [];
+import { saveTodo } from "./taskSlice";
 
 export default configureStore({
   reducer: {
-    tasks: taskReducer,
+    todos: saveTodo,
   },
 });
